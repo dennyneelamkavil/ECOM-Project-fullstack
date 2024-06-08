@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const ProductSchema = new mongoose.Schema(
   {
-    serial_no: String,
     title: String,
     category: String,
     description: String,
@@ -15,4 +14,4 @@ const ProductSchema = new mongoose.Schema(
 );
 
 const ProductModel = mongoose.model("Products", ProductSchema);
-module.exports = ProductModel;
+module.exports = ProductModel
