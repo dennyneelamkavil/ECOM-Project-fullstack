@@ -1,15 +1,39 @@
-import styled, { css } from "styled-components";
-export const MyButton = styled.button`
-background-color: blue;
+import  styled, { css } from 'styled-components';
+
+const MyButton = styled.button`
+/* background-color: red; */
 color: white;
-border: none;
-font-size: 16px;
-padding: 10px 20px;
 border-radius: 5px;
-cursor: pointer;
-${props => props.primary && css` background-color: green;` }
-${props => props.color ? `background-color: ${props.color}` : ''}
-${props => props.fontSize ? `font-size: ${props.fontSize}` : ''}
+border: 1px solid black;
+min-width: 200px;
+padding: 10px;
+font-size: large;
+
+
+${props => props.$primary && css `
+  background:maroon;
+  color:white;
+`}
+
+${props => props.$secondary && css `
+  background:white;
+  color:black;
+`}
+
+${props => props.$red && css `
+  background:red;
+  color:white;
+`}
+
+${props => props.$green && css `
+  background:green;
+  color:white;
+`}
+
+
+
 
 `;
 
+
+export default MyButton;
