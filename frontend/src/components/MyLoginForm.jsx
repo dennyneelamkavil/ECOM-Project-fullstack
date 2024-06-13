@@ -1,7 +1,10 @@
 import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
 import React from "react";
+import useLoginStore from "../store/loginStore";
 
 export default function MyLoginForm() {
+  const {setIsLogin} = useLoginStore()
+
   return (
     <Box width={400} m={3} p={3} sx={{ border: "1px solid black" }}>
       <Typography variant="h4" align="center" marginBottom={2}>
@@ -15,7 +18,7 @@ export default function MyLoginForm() {
         </Button>
       </Stack>
       <Typography align="center" variant="subtitle2" marginTop={1}>
-        Don't have an account? <Link sx={{ cursor: "pointer" }}>Sign Up here</Link>
+        Don't have an account? <Link onClick={setIsLogin} sx={{ cursor: "pointer" }}>Sign Up here</Link>
       </Typography>
     </Box>
   );

@@ -37,3 +37,12 @@ ${props => props.$green && css `
 
 
 export default MyButton;
+
+
+
+
+
+// Use it like this!
+
+// <MyButton $primary> Hello World! </MyButton>
+// <Button sx={{color: 'red', backgroundColor: 'black'}}>My Button</Button>
