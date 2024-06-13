@@ -4,13 +4,17 @@ const UserSchema = new mongoose.Schema(
   {
     name: String,
     email: {
-        type: String,
-        required: true,
-        unique: true,
-      },
-    password: String,
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
     isAdmin: Boolean,
-  },{
+  },
+  {
     timestamps: true,
   }
 );

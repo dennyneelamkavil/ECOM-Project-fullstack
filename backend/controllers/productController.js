@@ -1,8 +1,10 @@
 const ProductModel = require("../models/products");
+const ProductJoi = require("../validations/productJoi");
 
 // Add new product
 exports.addProduct = async (req, res) => {
     const productDetails = req.body;
+    await ProductJoi.validateAsync(productDetails);
     const product = new ProductModel(productDetails);
     console.log(product);
     await product.save();
