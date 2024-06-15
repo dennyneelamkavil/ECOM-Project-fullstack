@@ -1,9 +1,11 @@
 const UserModel = require("../models/users");
 const SignUpJoi = require("../validations/signUpJoi");
+const bcrypt = require('bcrypt');
 
 exports.signup = async (req, res) => {
   const userDetails = req.body;
   await SignUpJoi.validateAsync(userDetails);
+  userDetails.password = await bcrypt.hash(userDetails.password, 10);
   const user = new UserModel(userDetails);
   console.log(user);
   await user.save();
@@ -11,15 +13,14 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
-  await SignUpJoi.validateAsync(req.body);
-  const user = await UserModel.findOne({ email });
+  const loginDetails= req.body;
+  await SignUpJoi.validateAsync(loginDetails);
+  const user = await UserModel.findOne({ email: loginDetails.email });
   if (!user) {
     return res.status(401).send({ message: "User not found" });
   }
-  if (user.password !== password) {
+  if (!await bcrypt.compare(loginDetails.password, user.password)) {
     return res.status(401).send({ message: "Invalid password" });
   }
-  console.log(user);
   res.status(200).send({ message: "Login successful" });
 }
