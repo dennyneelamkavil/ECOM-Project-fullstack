@@ -4,17 +4,21 @@ import useLoginStore from "../store/loginStore";
 import { useForm } from "react-hook-form";
 import axios from 'axios'
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function MyLoginForm() {
   const { setIsLogin } = useLoginStore();
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, reset } = useForm();
+  const navigate = useNavigate();
 
   const toLogin = async (data) => {
     try {
       let res = await axios.post('http://localhost:4528/users/login',data)
       toast.success(res.data.message)
+      navigate('/')
     } catch (error) {
       toast.error(error.response.data.message)
+      reset();
     }
   };
 
