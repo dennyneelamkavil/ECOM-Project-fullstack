@@ -1,13 +1,44 @@
-import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import {
+  Avatar,
+  Container,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Button,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import data from "../assets/json/products";
+import { deleteProduct, getAllProducts } from "../apis";
+import { toast } from "react-toastify";
 
 export default function MyTable() {
   const [lists, setLists] = useState([]);
 
   useEffect(() => {
-    setLists(data.DUMMY_DATA);
+    init();
   }, []);
+
+  const init = async () => {
+    try {
+      let res = await getAllProducts();
+      setLists(res.data);
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteProduct(id);
+      toast.success("Product deleted successfully");
+      let updatedList = lists.filter((item) => item._id !== id);
+      setLists(updatedList);
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
 
   return (
     <Container>
@@ -21,6 +52,8 @@ export default function MyTable() {
               <TableCell>Image</TableCell>
               <TableCell>Quantity</TableCell>
               <TableCell>Price</TableCell>
+              <TableCell>Edit</TableCell>
+              <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -29,9 +62,24 @@ export default function MyTable() {
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.title}</TableCell>
                 <TableCell>{row.category}</TableCell>
-                <TableCell>{row.image}</TableCell>
+                <TableCell>
+                  <Avatar alt={row.title} src={row.image} />
+                </TableCell>
                 <TableCell>{row.quantity}</TableCell>
                 <TableCell>{row.price}</TableCell>
+                <TableCell>
+                  <Button variant="text">Edit</Button>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="text"
+                    onClick={() => {
+                      handleDelete(row._id);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
