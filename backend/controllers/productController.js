@@ -4,6 +4,10 @@ const ProductJoi = require("../validations/productJoi");
 // Add new product
 exports.addProduct = async (req, res) => {
     const productDetails = req.body;
+    console.log("productDetails: ", productDetails);
+    if(req.file) {
+        productDetails.image = `http://localhost:4528/uploads/${req.file.filename}`
+    }
     await ProductJoi.validateAsync(productDetails);
     const product = new ProductModel(productDetails);
     console.log(product);

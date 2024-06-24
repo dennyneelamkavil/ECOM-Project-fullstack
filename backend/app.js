@@ -6,13 +6,17 @@ require('dotenv').config();
 require('./db');
 const routes = require('./routes');
 const PORT = process.env.PORT || 4528;
+const path = require('path');
 
 app.use(cors({
     origin: '*',
 }));
 app.use(logger('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+
+app.use('/uploads',express.static(path.join(__dirname,'uploads')));
 app.use('/',routes)
 
 

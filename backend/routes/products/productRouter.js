@@ -7,9 +7,10 @@ const {
   getAllProducts,
 } = require("../../controllers/productController");
 const asyncHandler = require("../../utils/asyncHandler");
+const upload = require("../../utils/multer");
 
 router
-  .post("/", asyncHandler(addProduct))
+  .post("/",upload.single("image"), asyncHandler(addProduct))
   .get("/", asyncHandler(getAllProducts))
   .put("/:id", asyncHandler(updateProduct))
   .delete("/:id", asyncHandler(deleteProduct))

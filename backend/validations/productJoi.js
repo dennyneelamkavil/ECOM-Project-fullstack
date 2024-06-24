@@ -21,10 +21,9 @@ const ProductJoi = Joi.object({
     "string.min": `"description" should have a minimum length of {#limit}`,
     "any.required": `"description" is a required field`,
   }),
-  image: Joi.string().uri().required().messages({
+  image: Joi.string().required().messages({
     "string.base": `"image" should be a type of 'text'`,
     "string.empty": `"image" cannot be an empty field`,
-    "string.uri": `"image" must be a valid URI`,
     "any.required": `"image" is a required field`,
   }),
   quantity: Joi.number().integer().min(0).required().messages({

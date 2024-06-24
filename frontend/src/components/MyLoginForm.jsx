@@ -2,9 +2,9 @@ import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
 import React from "react";
 import useLoginStore from "../store/loginStore";
 import { useForm } from "react-hook-form";
-import axios from 'axios'
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { login } from "../apis";
 
 export default function MyLoginForm() {
   const { setIsLogin } = useLoginStore();
@@ -13,7 +13,7 @@ export default function MyLoginForm() {
 
   const toLogin = async (data) => {
     try {
-      let res = await axios.post('http://localhost:4528/users/login',data)
+      const res = await login(data)
       toast.success(res.data.message)
       navigate('/')
     } catch (error) {
