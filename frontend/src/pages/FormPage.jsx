@@ -7,10 +7,12 @@ import { addProduct, getProductById, updateProduct } from "../apis";
 import { useParams } from "react-router-dom";
 
 export default function FormPage() {
-  const { handleSubmit, register, reset, setValue } = useForm();
+  const { handleSubmit, register, reset, setValue, watch } = useForm();
 
   const {id} = useParams()
   const isEdit = Boolean(id);
+
+  const watchedFields = watch();
 
   useEffect(() => {
     const loadData = async () => {
@@ -67,19 +69,19 @@ export default function FormPage() {
           </Typography>
           <Grid container component={"form"} onSubmit={handleSubmit(onSubmit)} spacing={2} justifyContent={"center"}>
             <Grid item xs={12} md={6}>
-              <TextField label="Title" variant="outlined" sx={{ width: "100%" }} {...register("title")} />
+              <TextField label="Title" variant="outlined" sx={{ width: "100%" }} {...register("title")} InputLabelProps={{shrink:Boolean(watchedFields.title)}} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField label="Category" variant="outlined" sx={{ width: "100%" }} {...register("category")} />
+              <TextField label="Category" variant="outlined" sx={{ width: "100%" }} {...register("category")} InputLabelProps={{shrink:Boolean(watchedFields.category)}} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField label="Description" variant="outlined" sx={{ width: "100%" }} {...register("description")} />
+              <TextField label="Description" variant="outlined" sx={{ width: "100%" }} {...register("description")} InputLabelProps={{shrink:Boolean(watchedFields.description)}} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField label="Quantity" variant="outlined" sx={{ width: "100%" }} {...register("quantity")} />
+              <TextField label="Quantity" variant="outlined" sx={{ width: "100%" }} {...register("quantity")} InputLabelProps={{shrink:Boolean(watchedFields.quantity)}} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField label="Price" variant="outlined" sx={{ width: "100%" }} {...register("price")} />
+              <TextField label="Price" variant="outlined" sx={{ width: "100%" }} {...register("price")} InputLabelProps={{shrink:Boolean(watchedFields.price)}} />
             </Grid>
             <Grid item xs={12} md={6}>
               <Typography variant="h6">Upload Image</Typography>
