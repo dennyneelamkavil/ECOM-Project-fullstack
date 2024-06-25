@@ -12,22 +12,21 @@ export default function FormPage() {
   const {id} = useParams()
   const isEdit = Boolean(id);
 
-  const loadData = async () => {
-    if(!isEdit) return;
-    try {
-      const res = await getProductById(id);
-      let formData = res.data;
-      Object.keys(formData).forEach((key) => {
-        setValue(key, formData[key]);
-      })
-    } catch (error) {
-      toast.error("Failed to load product");
-    }
-  }
-
   useEffect(() => {
+    const loadData = async () => {
+      if(!isEdit) return;
+      try {
+        const res = await getProductById(id);
+        let formData = res.data;
+        Object.keys(formData).forEach((key) => {
+          setValue(key, formData[key]);
+        })
+      } catch (error) {
+        toast.error("Failed to load product");
+      }
+    }
     loadData();
-  }, [id]);
+  }, [id, isEdit, setValue]);
 
   const onSubmit = async (data) => {
     try {
