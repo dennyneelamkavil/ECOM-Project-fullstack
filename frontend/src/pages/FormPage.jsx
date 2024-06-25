@@ -1,33 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MyNavbar from "../components/MyNavbar";
 import { Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { addProduct } from "../apis";
+import { addProduct, getProductById, updateProduct } from "../apis";
+import { useParams } from "react-router-dom";
 
 export default function FormPage() {
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register, reset, setValue } = useForm();
+
+  const {id} = useParams()
+  const isEdit = Boolean(id);
+
+  const loadData = async () => {
+    if(!isEdit) return;
+    try {
+      const res = await getProductById(id);
+      let formData = res.data;
+      Object.keys(formData).forEach((key) => {
+        setValue(key, formData[key]);
+      })
+    } catch (error) {
+      toast.error("Failed to load product");
+    }
+  }
+
+  useEffect(() => {
+    loadData();
+  }, [id]);
 
   const onSubmit = async (data) => {
     try {
       const formdata = new FormData();
       Object.keys(data).forEach((key) => {
         formdata.append(key, data[key]);
-      })
+      });
       const fileInput = document.getElementById("image");
-      if(fileInput && fileInput.files[0]) {
+      if (fileInput && fileInput.files[0]) {
         formdata.append("image", fileInput.files[0]);
       }
-
       // for (let [key, value] of formdata.entries()) {
       //   console.log(key, value);
       // }
-
-      await addProduct(formdata);
-
+      isEdit ? await updateProduct(id, formdata) : await addProduct(formdata);
       toast.success("Product added successfully");
       reset();
-      
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -47,7 +64,7 @@ export default function FormPage() {
           }}
         >
           <Typography variant="h4" align="center" marginBottom={2}>
-            Add Product
+            {isEdit ? "Edit Product" : "Add Product"}
           </Typography>
           <Grid container component={"form"} onSubmit={handleSubmit(onSubmit)} spacing={2} justifyContent={"center"}>
             <Grid item xs={12} md={6}>
@@ -70,7 +87,7 @@ export default function FormPage() {
               <input type="file" name="image" id="image" />
             </Grid>
             <Button variant="contained" sx={{ width: "30%", marginTop: 2 }} type="submit">
-              Add Product
+              {isEdit ? "Update Product" : "Add Product"}
             </Button>
           </Grid>
         </Box>

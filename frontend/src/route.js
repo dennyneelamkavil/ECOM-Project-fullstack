@@ -17,6 +17,10 @@ export const router = createBrowserRouter([
     element: <FormPage />,
   },
   {
+    path: "/edit-form/:id",
+    element: <FormPage />,
+  },
+  {
     path: "*",
     element: <div>404 Not Found</div>,
   },

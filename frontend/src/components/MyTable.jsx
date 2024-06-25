@@ -12,9 +12,11 @@ import {
 import React, { useEffect, useState } from "react";
 import { deleteProduct, getAllProducts } from "../apis";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function MyTable() {
   const [lists, setLists] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     init();
@@ -38,6 +40,10 @@ export default function MyTable() {
     } catch (error) {
       toast.error("Something went wrong");
     }
+  };
+
+  const handleUpdate = async (id) => {
+    navigate(`/edit-form/${id}`);
   };
 
   return (
@@ -68,7 +74,14 @@ export default function MyTable() {
                 <TableCell>{row.quantity}</TableCell>
                 <TableCell>{row.price}</TableCell>
                 <TableCell>
-                  <Button variant="text">Edit</Button>
+                  <Button
+                    variant="text"
+                    onClick={() => {
+                      handleUpdate(row._id);
+                    }}
+                  >
+                    Edit
+                  </Button>
                 </TableCell>
                 <TableCell>
                   <Button
