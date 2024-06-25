@@ -44,7 +44,7 @@ export default function FormPage() {
       //   console.log(key, value);
       // }
       isEdit ? await updateProduct(id, formdata) : await addProduct(formdata);
-      toast.success("Product added successfully");
+      toast.success(isEdit ? "Product updated successfully" : "Product added successfully");
       reset();
     } catch (error) {
       toast.error(error.response.data.message);

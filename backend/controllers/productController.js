@@ -45,6 +45,9 @@ exports.deleteProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
     const id = req.params.id;
     const newData = req.body;
+    if(req.file) {
+        newData.image = `http://localhost:4528/uploads/${req.file.filename}`
+    }
     const product = await ProductModel.findByIdAndUpdate(id, newData);
     if(!product) {
         return res.status(404).send({message: "Product not found"});

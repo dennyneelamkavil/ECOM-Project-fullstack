@@ -12,7 +12,7 @@ const upload = require("../../utils/multer");
 router
   .post("/",upload.single("image"), asyncHandler(addProduct))
   .get("/", asyncHandler(getAllProducts))
-  .put("/:id", asyncHandler(updateProduct))
+  .put("/:id",upload.single("image"), asyncHandler(updateProduct))
   .delete("/:id", asyncHandler(deleteProduct))
   .get("/:id", asyncHandler(getById));
 
