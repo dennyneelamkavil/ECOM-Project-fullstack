@@ -1,4 +1,5 @@
 const UserModel = require("../models/users");
+const generateToken = require("../utils/jwtToken");
 const SignUpJoi = require("../validations/signUpJoi");
 const bcrypt = require('bcrypt');
 
@@ -22,5 +23,7 @@ exports.login = async (req, res) => {
   if (!await bcrypt.compare(loginDetails.password, user.password)) {
     return res.status(401).send({ message: "Invalid password" });
   }
-  res.status(200).send({ message: "Login successful" });
+  const token = await generateToken(loginDetails.email, loginDetails.password);
+  console.log(token);
+  res.status(200).send({status:true, message: "Login successful", token: token});
 }
