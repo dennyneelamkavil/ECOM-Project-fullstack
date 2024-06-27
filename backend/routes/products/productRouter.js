@@ -7,13 +7,14 @@ const {
   getAllProducts,
 } = require("../../controllers/productController");
 const asyncHandler = require("../../utils/asyncHandler");
+const { verifyToken } = require("../../utils/jwtToken");
 const upload = require("../../utils/multer");
 
 router
-  .post("/",upload.single("image"), asyncHandler(addProduct))
-  .get("/", asyncHandler(getAllProducts))
-  .put("/:id",upload.single("image"), asyncHandler(updateProduct))
-  .delete("/:id", asyncHandler(deleteProduct))
-  .get("/:id", asyncHandler(getById));
+  .post("/", verifyToken,upload.single("image"), asyncHandler(addProduct))
+  .get("/", verifyToken, asyncHandler(getAllProducts))
+  .put("/:id", verifyToken,upload.single("image"), asyncHandler(updateProduct))
+  .delete("/:id", verifyToken, asyncHandler(deleteProduct))
+  .get("/:id", verifyToken, asyncHandler(getById));
 
 module.exports = router;

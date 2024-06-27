@@ -5,15 +5,18 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { login } from "../apis";
+import useAuthStore from "../store/authStore";
 
 export default function MyLoginForm() {
   const { setIsLogin } = useLoginStore();
   const { handleSubmit, register, reset } = useForm();
   const navigate = useNavigate();
+  const {loginAuth} = useAuthStore();
 
   const toLogin = async (data) => {
     try {
       const res = await login(data)
+      loginAuth(res.data.token);
       toast.success(res.data.message)
       navigate('/')
     } catch (error) {

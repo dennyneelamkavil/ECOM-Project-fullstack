@@ -1,5 +1,5 @@
 const UserModel = require("../models/users");
-const generateToken = require("../utils/jwtToken");
+const { generateToken } = require("../utils/jwtToken");
 const SignUpJoi = require("../validations/signUpJoi");
 const bcrypt = require('bcrypt');
 

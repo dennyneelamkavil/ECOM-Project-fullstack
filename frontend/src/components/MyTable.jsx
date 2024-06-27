@@ -19,17 +19,22 @@ export default function MyTable() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    init();
-  }, []);
-
   const init = async () => {
     try {
       let res = await getAllProducts();
       setLists(res.data);
     } catch (error) {
+      if (error.response.status === 401 || error.response.status === 403) {
+        navigate("/login");
+        toast.error(`Unauthorized: ${error.response.data}`);
+      }else{
       toast.error("Something went wrong");
+      }
     }
   };
+    init();
+  }, [navigate]);
+
 
   const handleDelete = async (id) => {
     try {
@@ -38,7 +43,12 @@ export default function MyTable() {
       let updatedList = lists.filter((item) => item._id !== id);
       setLists(updatedList);
     } catch (error) {
+      if (error.response.status === 401 || error.response.status === 403) {
+        navigate("/login");
+        toast.error(`Unauthorized: ${error.response.data}`);
+      }else{
       toast.error("Something went wrong");
+      }
     }
   };
 

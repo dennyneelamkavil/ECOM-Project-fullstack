@@ -1,12 +1,18 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import FormPage from "./pages/FormPage";
+import useAuthStore from "./store/authStore";
+
+const PrivateRoute = ({children}) => {
+  const {isAuth} = useAuthStore();
+  return isAuth ? children : <Navigate to="/login" />
+};
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element:<PrivateRoute><HomePage /></PrivateRoute>,
   },
   {
     path: "/login",
@@ -14,11 +20,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/add-form",
-    element: <FormPage />,
+    element: <PrivateRoute><FormPage /></PrivateRoute>,
   },
   {
     path: "/edit-form/:id",
-    element: <FormPage />,
+    element: <PrivateRoute><FormPage /></PrivateRoute>,
   },
   {
     path: "*",
