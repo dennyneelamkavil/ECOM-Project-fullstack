@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:4528";
+// const BASE_URL = "http://localhost:4528";
+const BASE_URL = "https://ecom-project-fullstack-backend.onrender.com";
 
 export const login = async (data) => {
   try {
