@@ -64,6 +64,7 @@ export default function MyTable() {
             <TableRow>
               <TableCell>Sl No</TableCell>
               <TableCell>Title</TableCell>
+              <TableCell>Description</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Image</TableCell>
               <TableCell>Quantity</TableCell>
@@ -77,6 +78,7 @@ export default function MyTable() {
               <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.title}</TableCell>
+                <TableCell>{row.description}</TableCell>
                 <TableCell>{row.category}</TableCell>
                 <TableCell>
                   <Avatar alt={row.title} src={row.image} />
