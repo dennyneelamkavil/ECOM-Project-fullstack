@@ -1,12 +1,13 @@
 const ProductModel = require("../models/products");
 const ProductJoi = require("../validations/productJoi");
+const cloudinary = require("../utils/cloudinaryConfig");
 
 // Add new product
 exports.addProduct = async (req, res) => {
     const productDetails = req.body;
-    console.log("productDetails: ", productDetails);
     if(req.file) {
-        productDetails.image = `http://localhost:4528/uploads/${req.file.filename}`
+        productDetails.image = req.file.path;
+        productDetails.imagePublicId = req.file.filename;
     }
     await ProductJoi.validateAsync(productDetails);
     const product = new ProductModel(productDetails);
@@ -38,6 +39,9 @@ exports.deleteProduct = async (req, res) => {
     if(!product) {
         return res.status(404).send({message: "Product not found"});
     }
+    if(product.imagePublicId) {
+        await cloudinary.uploader.destroy(product.imagePublicId);
+    }
     res.status(200).send({data: product, message: "Product deleted successfully"});
 }
 
@@ -46,7 +50,8 @@ exports.updateProduct = async (req, res) => {
     const id = req.params.id;
     const newData = req.body;
     if(req.file) {
-        newData.image = `http://localhost:4528/uploads/${req.file.filename}`
+        newData.image = req.file.path;
+        newData.imagePublicId = req.file.filename;
     }
     const product = await ProductModel.findByIdAndUpdate(id, newData);
     if(!product) {

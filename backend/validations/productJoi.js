@@ -26,6 +26,11 @@ const ProductJoi = Joi.object({
     "string.empty": `"image" cannot be an empty field`,
     "any.required": `"image" is a required field`,
   }),
+  imagePublicId: Joi.string().required().messages({
+    "string.base": `"imagePublicId" should be a type of 'text'`,
+    "string.empty": `"imagePublicId" cannot be an empty field`,
+    "any.required": `"imagePublicId" is a required field`,
+  }),
   quantity: Joi.number().integer().min(0).required().messages({
     "number.base": `"quantity" should be a type of 'number'`,
     "number.integer": `"quantity" must be an integer`,

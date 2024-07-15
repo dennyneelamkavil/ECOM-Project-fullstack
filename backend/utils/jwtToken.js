@@ -17,7 +17,7 @@ exports.verifyToken = async (req, res, next) => {
     return res.status(403).send("A token is required for authentication");
   }
   try {
-    console.log("token: ", token);
+    // console.log("token: ", token);
   jwt.verify(token, process.env.JWT_SECRETKEY);
   return next();
   } catch (err) {

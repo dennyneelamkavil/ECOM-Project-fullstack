@@ -24,6 +24,6 @@ exports.login = async (req, res) => {
     return res.status(401).send({ message: "Invalid password" });
   }
   const token = await generateToken(loginDetails.email, loginDetails.password);
-  console.log(token);
+  // console.log(token);
   res.status(200).send({status:true, message: "Login successful", token: token});
 }
