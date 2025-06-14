@@ -17,6 +17,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/',routes)
 
+// app.all  for all routes
+app.all('*', (req, res) => {
+    res.status(404).send({ message: 'Route not found' });
+})
 
 
 // app.listen

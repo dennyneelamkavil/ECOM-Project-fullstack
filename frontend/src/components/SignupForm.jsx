@@ -32,8 +32,8 @@ export default function SignupForm() {
         sx={{ width: "100%", justifyContent: "center", alignItems: "center" }}
       >
         <TextField label="Email" variant="outlined" sx={{ width: "100%" }} {...register("email")} />
-        <TextField label="New Password" variant="outlined" sx={{ width: "100%" }} />
-        <TextField label="Confirm Password" variant="outlined" sx={{ width: "100%" }} {...register("password")} />
+        <TextField label="New Password" variant="outlined" type="password" sx={{ width: "100%" }} />
+        <TextField label="Confirm Password" variant="outlined" type="password" sx={{ width: "100%" }} {...register("password")} />
         <Button variant="contained" sx={{ width: "60%" }} type="submit">
           Sign Up
         </Button>

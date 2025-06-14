@@ -37,7 +37,7 @@ export default function MyLoginForm() {
         sx={{ width: "100%", justifyContent: "center", alignItems: "center" }}
       >
         <TextField label="Email" variant="outlined" sx={{ width: "100%" }} {...register("email")} />
-        <TextField label="Password" variant="outlined" sx={{ width: "100%" }} {...register("password")} />
+        <TextField label="Password" variant="outlined" type="password" sx={{ width: "100%" }} {...register("password")} />
         <Button variant="contained" sx={{ width: "60%" }} type="submit">
           Login
         </Button>
